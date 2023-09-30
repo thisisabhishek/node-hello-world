@@ -2,10 +2,10 @@
   "name": "student-management-api",
   "version": "1.0.0",
   "description": "This is API for college student dashboard",
-  "main": "api.js",
+  "main": "index.js",
   "type": "commonjs",
   "scripts": {
-    "prod": "node api",
+    "prod": "node index",
     "dev": "nodemon api",
     "test": "echo \"Error: no test specified\" && exit 1"
   },

@@ -1,31 +1,12 @@
+require('dotenv').config()
 const express = require('express')
+const studentRouter = require('./router/student')
 
-const PORT = 5002
 const app = express()
-app.listen(PORT, () => console.log(`Server started on Port: ${PORT}`))
 
-let students = [
-    {
-        name: "Abhishek",
-        branch: "CSE",
-        rollno: 1
-    },
-    {
-        name: "Aparna",
-        branch: "CSE",
-        rollno: 2
-    },
-    {
-        name: "Pritesh",
-        branch: "IT",
-        rollno: 3
-    },
-    {
-        name: "Pranay",
-        branch: "Mechanical",
-        rollno: 4
-    }
-]
+const PORT = process.env.PORT
+
+app.listen(PORT, () => console.log(`Server started on Port: ${PORT}`))
 
 const logger = (req, res, next) => {
     console.log("Request received...")
@@ -34,23 +15,13 @@ const logger = (req, res, next) => {
         body: req.body,
         method: req.method
     })
-    next() 
+    next()
 }
 
+// middlewares
 app.use(logger)
 app.use(express.json())
+app.use(studentRouter)
 
-app.get('/api/students', (req, res) => {
-    res.send(students)
-})
 
-app.get('/api/students/:rollno', (req, res) => {
-    res.send(students[req.params.rollno - 1])
-})
-
-app.post("/api/students", (req, res) => {
-    const body = req.body;
-    students.push(body)
-    res.send({success: true})
-})
 

@@ -1,11 +1,11 @@
 {
-  "name": "hello-world",
+  "name": "student-management-api",
   "version": "1.0.0",
-  "description": "This is my first node app",
-  "main": "app.js",
+  "description": "This is API for college student dashboard",
+  "main": "api.js",
   "type": "commonjs",
   "scripts": {
-    "prod": "node app",
+    "prod": "node api",
     "dev": "nodemon api",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -16,6 +16,7 @@
   },
   "dependencies": {
     "date-fns": "^2.30.0",
+    "dotenv": "^16.3.1",
     "express": "^4.18.2"
   }
 }

@@ -1,41 +1,22 @@
 const express = require('express')
+const Student = require('../models/student')
 
 const router = express.Router()
 
-let students = [
-    {
-        name: "Abhishek",
-        branch: "CSE",
-        rollno: 1
-    },
-    {
-        name: "Aparna",
-        branch: "CSE",
-        rollno: 2
-    },
-    {
-        name: "Pritesh",
-        branch: "IT",
-        rollno: 3
-    },
-    {
-        name: "Pranay",
-        branch: "Mechanical",
-        rollno: 4
-    }
-]
-
-router.get('/api/students', (req, res) => {
+router.get('/api/students', async (req, res) => {
+    const students = await Student.find();
     res.send(students)
 })
 
-router.get('/api/students/:rollno', (req, res) => {
-    res.send(students[req.params.rollno - 1])
+router.get('/api/students/:rollno', async (req, res) => {
+    const id = req.params.rollno;
+    const student = await Student.findOne({"rollno": id})
+    res.send(student)
 })
 
-router.post("/api/students", (req, res) => {
+router.post("/api/students", async (req, res) => {
     const body = req.body;
-    students.push(body)
+    const dbStudent = await Student.create(body);
     res.send({success: true})
 })
 

@@ -1,5 +1,13 @@
 require('dotenv').config()
 const express = require('express')
+const mongoose = require('mongoose')
+
+const pm = mongoose.connect(process.env.MONGODB_URL)
+
+pm.then(() => {
+    console.log("Connection to MongoDB setup successfully...")
+})
+
 const studentRouter = require('./router/student')
 
 const app = express()

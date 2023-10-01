@@ -15,9 +15,16 @@ router.get('/api/students/:rollno', async (req, res) => {
 })
 
 router.post("/api/students", async (req, res) => {
-    const body = req.body;
-    const dbStudent = await Student.create(body);
-    res.send({success: true})
+    const dToken = req.user;
+    if(dToken.role === "ADMIN") {
+        const body = req.body;
+        const dbStudent = await Student.create(body);
+        res.send({success: true})
+    } else {
+        res.status = 401
+        res.send({msg: "You are not allowed to perform this operation."})
+    }
+    
 })
 
 router.delete("/api/students", (req, res) => {

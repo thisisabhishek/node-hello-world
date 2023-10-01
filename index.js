@@ -1,6 +1,7 @@
 require('dotenv').config()
 const express = require('express')
 const mongoose = require('mongoose')
+const jwt = require('jsonwebtoken');
 
 const pm = mongoose.connect(process.env.MONGODB_URL)
 
@@ -9,6 +10,7 @@ pm.then(() => {
 })
 
 const studentRouter = require('./router/student')
+const userRouter = require('./router/user')
 
 const app = express()
 
@@ -26,10 +28,22 @@ const logger = (req, res, next) => {
     next()
 }
 
+const verifyToken = (req, res, next) => {
+    const token = req.headers.authorization;
+    if(token) {
+        const decodedToken = jwt.verify(token, process.env.SECRET_KEY)
+        req.user = decodedToken
+    }
+    next()
+}
+
 // middlewares
 app.use(logger)
 app.use(express.json())
+app.use(verifyToken)
+// routes supported - API
 app.use(studentRouter)
+app.use(userRouter)
 
 
 
